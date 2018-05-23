@@ -1,8 +1,8 @@
-package com.jun.thread.test;
+package com.jun.thread.main;
 
 import com.jun.thread.lock.LockHandler;
 
-public class Test {
+public class LockHandlerMain {
 	public static void main(String[] args) {
 		String[] values = new String[] {"aa","dd","bb","ee","ff","gg","aa","aa"};
 		//初始化，单线程模式不用锁

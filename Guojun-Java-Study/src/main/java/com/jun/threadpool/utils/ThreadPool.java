@@ -4,21 +4,31 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 线程池的实现
- *
+ * 
+ * @Description: 线程池的实现
+ * @author v-yuguojun
+ * @date 2018年5月23日 下午3:10:35
  */
 public class ThreadPool {
 	
-	//线程池中默认的线程数
+	/**
+	 * 线程池中默认的线程数
+	 */
 	private static int workerNum = 5;
 	
-	//工作线程
+	/**
+	 * 工作线程
+	 */
 	private WorkThread[] workThreads;
 	
-	//已完成的任务数
+	/**
+	 * 已完成的任务数
+	 */
 	private static volatile int finshedTask = 0;
 	
-	//任务队列，作为缓冲，List不安全
+	/**
+	 * 任务队列，作为缓冲，List不安全
+	 */
 	List<Runnable> taskQueue = new LinkedList<>();
 	
 	private static volatile ThreadPool threadPool ;
@@ -98,7 +108,8 @@ public class ThreadPool {
 	 * 销毁线程池，该方法保证所有线程都执行完毕才进行销毁，否则等待任务完成才销毁
 	 */
 	public void destroy() {
-		while (!taskQueue.isEmpty()) { //如果还有任务没完成，先睡一会吧
+		//如果还有任务没完成，先睡一会吧
+		while (!taskQueue.isEmpty()) {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -158,7 +169,9 @@ public class ThreadPool {
 	 */
 	private class WorkThread extends Thread {
 		
-		//表示该工作线程是否有效，用于结束线程
+		/**
+		 * 表示该工作线程是否有效，用于结束线程
+		 */
 		private boolean isRunning = true;
 		
 		@Override
@@ -166,7 +179,8 @@ public class ThreadPool {
 			Runnable r = null;
 			while (isRunning) {
 				synchronized (taskQueue) {
-					while (isRunning && taskQueue.isEmpty()) { //队列为空
+					//队列为空
+					while (isRunning && taskQueue.isEmpty()) {
 						try {
 							taskQueue.wait(20);
 						} catch (InterruptedException e) {
@@ -174,13 +188,15 @@ public class ThreadPool {
 						}
 					}
 					
-					if (!taskQueue.isEmpty()) { //取出任务
+					//取出任务
+					if (!taskQueue.isEmpty()) {
 						r = taskQueue.remove(0);
 					}
 				}
 				
+				//执行任务
 				if (r != null) {
-					r.run(); //执行任务
+					r.run(); 
 				}
 				
 				finshedTask ++;
@@ -188,7 +204,9 @@ public class ThreadPool {
 			}
 		}
 		
-		// 停止工作，让该线程自然执行完run方法，自然结束  
+		/**
+		 *  停止工作，让该线程自然执行完run方法，自然结束  
+		 */
 		public void stopWorker() {
 			isRunning = false;
 		}

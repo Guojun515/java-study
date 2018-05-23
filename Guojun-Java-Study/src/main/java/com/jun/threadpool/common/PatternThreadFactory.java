@@ -1,4 +1,4 @@
-package com.jun.regex.common;
+package com.jun.threadpool.common;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;

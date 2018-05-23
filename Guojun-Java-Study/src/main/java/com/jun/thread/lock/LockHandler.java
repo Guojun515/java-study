@@ -7,6 +7,12 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * 
+ * @Description: 锁的学习
+ * @author v-yuguojun
+ * @date 2018年5月23日 下午4:23:42
+ */
 public class LockHandler {
 	
 	/**

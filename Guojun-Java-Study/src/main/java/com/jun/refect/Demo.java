@@ -104,9 +104,7 @@ public class Demo {
 		public void setUname(String uname) {
 			this.uname = uname;
 		}
-
 	}
-
 }
 
 

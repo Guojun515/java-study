@@ -1,129 +1,86 @@
 package com.jun.thread.lock;
 
-import java.util.concurrent.locks.ReentrantLock;
+import com.jun.thread.lock.reentrantlock.ReentrantLockSampleSupport;
+import com.jun.thread.lock.reentrantlock.SampleSupport;
+import com.jun.thread.lock.reentrantlock.SynchronizedSampleSupport;
 
 /**
- * 测试可中断锁
- * @author FR0012
- *
+ * 
+ * @Description: 测试可中断锁
+ * @author v-yuguojun
+ * @date 2018年5月23日 下午4:50:29
  */
-
 public class ReentrantLockSample {  
 
-	public static void main(String[] args) {  
-		testSynchronized();  
-		//testReentrantLock();  
-	}  
-
+	/**
+	 * ReentrantLock 中断测试
+	 */
 	public static void testReentrantLock() {  
-		final SampleSupport1 support = new SampleSupport1();  
+		final SampleSupport support = new ReentrantLockSampleSupport();  
 		
-		Thread first = new Thread(new Runnable() {  
-			public void run() {  
-				try {  
-					support.doSomething();  
-				}  
-				catch (InterruptedException e) {  
-					e.printStackTrace();  
-				}  
+		Thread thread1 = new Thread(() -> {
+			try {  
+				support.doSomething();  
 			}  
-		});  
+			catch (Exception e) {  
+				e.printStackTrace();  
+			} 
+		}, "ReentrantLock 中断测试1");  
 
-		Thread second = new Thread(new Runnable() {  
-			public void run() {  
-				try {  
-					support.doSomething();  
-				}  
-				catch (InterruptedException e) {  
-					System.out.println("Second Thread Interrupted without executing counter++,beacuse it waits a long time.");  
-				}  
+		Thread thread2 = new Thread(() -> {  
+			try {  
+				support.doSomething();  
 			}  
-		});  
+			catch (Exception e) {  
+				System.out.println("Second Thread Interrupted without executing counter++,beacuse it waits a long time.");  
+			}   
+		}, "ReentrantLock 中断测试2");  
 
-		executeTest(first, second);  
+		ReentrantLockSample.executeTest(thread1, thread2); 
 	}  
 
+	/**
+	 * Synchronized 中断测试
+	 */
 	public static void testSynchronized() {  
-		final SampleSupport2 support2 = new SampleSupport2();  
+		final SampleSupport support2 = new SynchronizedSampleSupport();  
 
 		Runnable runnable = new Runnable() {  
+			@Override
 			public void run() {  
-				support2.doSomething();  
+				try {
+					support2.doSomething();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}  
 			}  
 		};  
+		
+		Thread thread1 = new Thread(runnable,"synchronized 中断测试1");  
+		Thread thread2 = new Thread(runnable, "synchronized 中断测试2");  
 
-		Thread third = new Thread(runnable);  
-		Thread fourth = new Thread(runnable);  
-
-		executeTest(third, fourth);  
+		ReentrantLockSample.executeTest(thread1, thread2);  
 	}  
 
 	/** 
-	 * Make thread a run faster than thread b, 
-	 * then thread b will be interruted after about 1s. 
-	 * @param a 
-	 * @param b 
+	 * Make thread thread1 run faster than thread thread2, 
+	 * then thread thread2 will be interruted after about 1s. 
+	 * @param thread1 
+	 * @param thread2
 	 */  
-	public static void executeTest(Thread a, Thread b) {  
+	private static void executeTest(Thread thread1, Thread thread2) {  
 		try {
-			//启动a线程后100ms再启动b线程
-			a.start();  
+			//启动thread1线程后100ms再启动thread2线程
+			thread1.start();  
 			Thread.sleep(100);  
-			b.start();
+			thread2.start();
 
+			//1s后中断thread2线程，synchronized未获取锁的线程不会中断，Lock.lock()也不会
 			Thread.sleep(1000);
-			b.interrupt();//1s后中断b线程，synchronized未获取锁的线程不会中断，Lock.lock()也不会
+			thread2.interrupt();
 		}  
 		catch (InterruptedException e) {  
 			e.printStackTrace();  
 		}  
-	}  
-}  
-
-abstract class SampleSupport {  
-
-	protected int counter;  
-
-	/** 
-	 * 简单的倒计时，倒计时5秒
-	 */  
-	public void startTheCountdown() {  
-		long currentTime = System.currentTimeMillis();  
-		for (;;) {  
-			long diff = System.currentTimeMillis() - currentTime;  
-			if (diff > 5000) {  
-				break;  
-			}  
-		}  
-	}  
-}  
-
-class SampleSupport1 extends SampleSupport {  
-
-	private final ReentrantLock lock = new ReentrantLock();  
-
-	public void doSomething() throws InterruptedException {  
-		lock.lockInterruptibly(); // 可中断线程，如果用lock()则不能中断
-		System.out.println(Thread.currentThread().getName() + " will execute counter++.");  
-		startTheCountdown();  //倒计时5ms
-		try {  
-			counter++;  
-			
-			System.out.println(counter);
-		}
-		finally {  
-			lock.unlock();  
-		}  
-	}  
-}  
-
-class SampleSupport2 extends SampleSupport {  
-
-	public synchronized void doSomething() {  
-		System.out.println(Thread.currentThread().getName() + " will execute counter++.");  
-		startTheCountdown(); //倒计时5ms
-		
-		counter++;  
-		System.out.println(counter);
 	}  
 }  

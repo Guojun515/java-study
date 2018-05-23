@@ -1,4 +1,4 @@
-package com.jun.regex.main;
+package com.jun.threadpool.main;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -7,19 +7,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.jun.regex.common.PatternManager;
-import com.jun.regex.common.PatternThreadFactory;
+import com.jun.threadpool.common.PatternThreadFactory;
 
 /**
- * @Description 正则测试
+ * @Description JDK 自带的线程池使用
  * @author Guojun
  * @Date 2017年11月17日 下午11:56:19
  *
  */
-public class PatterTest {
-
+public class JdkThreadPoolMain {
 	public static void main(String[] args) {
 		final String regex = "<aa>(.+)</aa>";
-		int len = 1000;
+		int len = 10;
 		
 		/*
 		 * 线程池 corePoolSize，maximumPoolSize，workQueue的关系
@@ -53,18 +52,14 @@ public class PatterTest {
 				new ArrayBlockingQueue<Runnable>(100), new PatternThreadFactory());
 		
 		for (int i = 0; i < len; i ++) {
-			Runnable runnable = new Runnable() {
-				@Override
-				public void run() {
-					PatternManager patternManager = PatternManager.getInstance();
-					Pattern pattern = patternManager.buildPattern(regex);
-					Matcher match = pattern.matcher("***<aa>zhang</aa>****");
-					while(match.find()) {
-						System.out.println(match.group(1));
-					}
+			executor.execute(()->{
+				PatternManager patternManager = PatternManager.getInstance();
+				Pattern pattern = patternManager.buildPattern(regex);
+				Matcher match = pattern.matcher("***<aa>zhang</aa>****");
+				while(match.find()) {
+					System.out.println(match.group(1));
 				}
-			};
-			executor.execute(runnable);
+			});
 		}
 
 		try {
