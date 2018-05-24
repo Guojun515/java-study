@@ -17,7 +17,7 @@ import java.net.UnknownHostException;
 public class Client {
 
 	public static void main(String[] args) {
-		String host = "192.168.2.51";
+		String host = "localhost";
 		int port = 1314;
 
 		try {
@@ -26,7 +26,7 @@ public class Client {
 			//输入参数
 			OutputStream out = socket.getOutputStream();
 			PrintWriter pw = new PrintWriter(out);
-			pw.write("{\"用户名\":\"admin\",\"密码\":\"123456\"}");
+			pw.write("{\"用户名\":\"admin\",\"密码\":\"123456000\"}");
 			pw.flush();
 			socket.shutdownOutput();
 			

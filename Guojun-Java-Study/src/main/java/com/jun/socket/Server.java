@@ -4,15 +4,40 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 /**
- * 被请求的服务端
- * @author FR0012
- *
+ * 
+ * @Description: 服务端实现
+ * @author v-yuguojun
+ * @date 2018年5月24日 下午5:54:20
  */
 public class Server {
+	/**
+	 * 服務端對象
+	 */
+	private static final Server SERVER = new Server();
+	
+	/**
+	 * 线程池
+	 */
+	private static ThreadPoolExecutor EXECUTOR = new ThreadPoolExecutor(
+			10, 150, 30, TimeUnit.MINUTES, 
+			new ArrayBlockingQueue<Runnable>(100), (runnable) -> {
+				return new Thread(runnable, "测试线程" + System.currentTimeMillis());
+			});
+	
 	public static void main(String[] args) throws InterruptedException {
+		SERVER.startupServer();
+	}
+	
+	/**
+	 * 服务程序启动
+	 */
+	private void startupServer() {
 		ServerSocket serverSocket = null;
 		try {
 			System.out.println("***服务器即将启动，等待客户端的连接***");
@@ -31,7 +56,7 @@ public class Server {
 				//创建一个新的线程
 				ServerThread serverThread=new ServerThread(socket);
 				//启动线程
-				serverThread.start();
+				EXECUTOR.execute(serverThread);
 
 				//统计客户端的数量
 				count++;
