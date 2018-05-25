@@ -27,10 +27,10 @@ public class Server {
 	private static ThreadPoolExecutor EXECUTOR = new ThreadPoolExecutor(
 			10, 150, 30, TimeUnit.MINUTES, 
 			new ArrayBlockingQueue<Runnable>(100), (runnable) -> {
-				return new Thread(runnable, "测试线程" + System.currentTimeMillis());
+				return new Thread(runnable, "服务端线程" + System.currentTimeMillis());
 			});
 	
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws Exception {
 		SERVER.startupServer();
 	}
 	

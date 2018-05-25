@@ -10,9 +10,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * 请求的客户端
- * @author FR0012
- *
+ * 
+ * @Description: 请求的客户端
+ * @author v-yuguojun
+ * @date 2018年5月25日 上午11:32:32
  */
 public class Client {
 
@@ -26,7 +27,7 @@ public class Client {
 			//输入参数
 			OutputStream out = socket.getOutputStream();
 			PrintWriter pw = new PrintWriter(out);
-			pw.write("{\"用户名\":\"admin\",\"密码\":\"123456000\"}");
+			pw.write("Hello 服务端！");
 			pw.flush();
 			socket.shutdownOutput();
 			
