@@ -8,6 +8,8 @@ import java.io.Reader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.jun.http.HttpUtil;
+
 /**
  * 微信表情包下载
  * @author FR0012

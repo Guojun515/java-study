@@ -1,4 +1,4 @@
-package com.jun.crawler;
+package com.jun.http;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -20,6 +20,7 @@ import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.Registry;
@@ -180,17 +181,56 @@ public class HttpClientUtil {
         return result;  
 	}
 	
+	public static String doGet(String url, String charset) throws Exception {
+		String result = null;
+		
+		HttpGet httpGet = new HttpGet(url);
+		
+		CloseableHttpResponse response = client.execute(httpGet);
+		
+		if (response == null) {
+			throw new RuntimeException("请求返回异常");
+		}
+
+		if (response.getStatusLine() == null || response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+			int errorCode = response.getStatusLine() == null ? UNKNOWN_EXCEPTION_CODE : response.getStatusLine().getStatusCode();
+			throw new RuntimeException(StringUtils.join("请求返回异常，异常代码：", errorCode));
+		}
+		
+		HttpEntity responseEntity = response.getEntity();
+		if (responseEntity != null) {
+			//按指定编码转换结果实体为String类型  
+			result = EntityUtils.toString(responseEntity, charset); 
+		}
+		
+		response.close();
+		
+		return result;
+	}
+	
 	public static void main(String[] args) throws Exception {
-		String url="https://segmentfault.com/a/1190000012316621#articleHeader5";  
-	    String body = doPost(url, null,"utf-8");  
-	    System.out.println("响应结果：");  
-	    System.out.println(body);  
+		new Thread(()->{
+			try {
+				String url="https://www.sojson.com/open/api/weather/json.shtml?city=珠海";  
+			    String body = doGet(url,"utf-8");  
+			    System.out.println("响应结果1：");  
+			    System.out.println(body);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}  
+		}).start();;
 	  
 	    System.out.println("-----------------------------------");  
 	  
-	    url = "https://www.yeetrack.com/?p=782#HTTP-connection-routing";
-	    body = doPost(url, null, "utf-8");  
-	    System.out.println("响应结果：");  
-	    System.out.println(body);  
+	    new Thread(() -> {
+	    	try {
+	    		String url = "https://www.sojson.com/open/api/lunar/json.shtml";
+		    	String body = doGet(url, "utf-8");  
+			    System.out.println("响应结果2：");  
+			    System.out.println(body);  
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    }).start();
 	}
 }

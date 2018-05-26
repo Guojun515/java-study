@@ -1,4 +1,4 @@
-package com.jun.crawler;
+package com.jun.http;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
