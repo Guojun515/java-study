@@ -15,6 +15,13 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.X509TrustManager;
 
+/**
+ * 
+ * @Description java 原生网络请求
+ * @author Guojun
+ * @Date 2018年5月26日 下午8:04:40
+ *
+ */
 public class HttpUtil {
 	
 	/**
@@ -67,6 +74,7 @@ public class HttpUtil {
 		HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
 
 		HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+			@Override
 			public boolean verify(String hostname, SSLSession session) {
 				return true;
 			}
