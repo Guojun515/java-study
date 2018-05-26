@@ -3,19 +3,44 @@ package com.jun.rpc.nio.util;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * 
+ * @Description 对象描述
+ * @author Guojun
+ * @Date 2018年5月26日 下午3:05:44
+ *
+ */
 public class Call implements Serializable {
 	private static final long serialVersionUID = 3241351563527629480L;
 
+	/**
+	 * 返回结果
+	 */
 	private Object result;
 	
+	/**
+	 * 状态，根据此状态判断数据有没有返回
+	 */
 	private boolean done;
 	
+	/**
+	 * 服务名称，对应的接口名称
+	 */
 	private String serverName;
 
+	/**
+	 * 方法名称
+	 */
 	private  String method;
 
+	/**
+	 * 参数
+	 */
 	private Object[] args;
 	
+	/**
+	 * 参数类型
+	 */
 	private Class<?>[] paramTypes;
 
 	public Call (String serverName, String method, Object[] args, Class<?>[] paramTypes) {
@@ -31,7 +56,7 @@ public class Call implements Serializable {
 	 * @throws IOException
 	 */
 	public byte[] getByte() throws IOException{
-		return ToolUtils.objectToByte(this);
+		return SerializableUtils.objectToByte(this);
 	}
 
 	/**
@@ -41,7 +66,7 @@ public class Call implements Serializable {
 	 * @throws Exception
 	 */
 	public static Call getCall (byte[] data) throws Exception {
-		return (Call) ToolUtils.byteToObject(data);
+		return (Call) SerializableUtils.byteToObject(data);
 	}
 
 	public Object getResult() {

@@ -10,13 +10,21 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 import com.jun.rpc.nio.util.Call;
-import com.jun.rpc.nio.util.ToolUtils;
+import com.jun.rpc.nio.util.SerializableUtils;
 
-public class ServerHandler implements Runnable {
-	
-	private static final HashMap<String, Class<?>> serviceRegistry = new HashMap<>();
+/**
+ * 
+ * @Description NIO实现的服务端
+ * @author Guojun
+ * @Date 2018年5月26日 下午2:35:57
+ *
+ */
+public class ServerHandler  {
+
+	private static final HashMap<String, Class<?>> SERVICE_REGISTRY = new HashMap<>();
 
 	/**
 	 * Selector会不断轮询注册在其上的Channel,如果某个Channel上边发生读或者写事件，这个Channel就处于就绪状态，
@@ -27,81 +35,72 @@ public class ServerHandler implements Runnable {
 	/**
 	 * 判断这个服务的启动状态
 	 */
-	private volatile boolean started;
+	private boolean started = true;
 
 	/**
-	 * 默认构造方法
+	 * 启动方法
 	 * @param port
+	 * @throws Exception
 	 */
-	public ServerHandler (int port) {
-		try {
-			//打开监听渠道
-			ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-			//设置为true,此渠道为阻塞模式；设置为false，此渠道为非阻塞模式
-			serverSocketChannel.configureBlocking(false);
-			//绑定端口
-			serverSocketChannel.socket().bind(new InetSocketAddress(port));
+	public void start(int port) throws Exception {
+		//创建通道管理器对象selector
+		selector = Selector.open();
 
-			//获得一个通道管理器
-			selector = Selector.open();
-			//将通道管理器和该通道绑定，并为该通道注册SelectionKey.OP_ACCEPT事件,注册该事件后，  
-			//当该事件到达时，selector.select()会返回，如果该事件没到达selector.select()会一直阻塞。  
-			serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+		//创建一个通道对象ServerSocketChannel
+		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+		//绑定监听端口
+		serverSocketChannel.socket().bind(new InetSocketAddress(port));
+		/*
+		 * 设置为true,此渠道为阻塞模式；设置为false，此渠道为非阻塞模式
+		 * channel和Selector绑定时，channel必须是非阻塞模式
+		 * 而FileChannel不能切换到非阻塞模式，因为它不是套接字通道，所以FileChannel不能和Selector绑定事件
+		 */
+		serverSocketChannel.configureBlocking(false);
+		/*
+		 * 将通道管理器和该通道绑定，并为该通道注册SelectionKey.OP_ACCEPT事件,注册该事件后，  
+		 * 当该事件到达时，selector.select()会返回，如果该事件没到达selector.select()会一直阻塞。
+		 */
+		serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
-			//服务启动
-			started = true;
-			System.out.println("The server start success !");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+		//服务已经启动
+		System.out.println("The server start success !");
 
-	@Override
-	public void run() {
 		//循环遍历selector
 		while (started) {
-			SelectionKey selectionKey = null;
-			try {
-				//无论是否有读写，selector每隔1秒被唤醒一次
-				selector.select(1000);
-				//阻塞，只有当至少一个注册事件发生的时候才会被继续
-				//selector.select();
+			//无论是否有读写，selector每隔1秒被唤醒一次
+			selector.select(1000);
+			
+			//阻塞，只有当至少一个注册事件发生的时候才会被继续
+			//selector.select();
 
-				// 获得selector中选中的项的迭代器，选中的项为注册的事件  
-				Iterator<SelectionKey> it = selector.selectedKeys().iterator();
-				while (it.hasNext()) {
-					selectionKey = it.next();
-					it.remove();
+			//如果channel有数据了，将生成的key放入集合中
+			Set<SelectionKey> keys = selector.selectedKeys();
+			// 获得selector中选中的项的迭代器，选中的项为注册的事件  
+			Iterator<SelectionKey> it = keys.iterator();
+			while (it.hasNext()) {
+				SelectionKey selectionKey = it.next();
+				//拿到当前key实例之后记得在迭代器中将这个元素删除，非常重要，否则会出错
+				it.remove();
 
-					//判断这个selectionKey是否有效的
-					if (!selectionKey.isValid()) { 
-						continue;
-					}
-
-					//这个key代表是一个新接入的请求
-					if (selectionKey.isAcceptable()) {
-						this.accept(selectionKey);
-					}
-
-					//读写取信息
-					if (selectionKey.isReadable()) {
-						Object result = this.read(selectionKey);
-						if (result != null) {
-							this.write(selectionKey, result);
-						} else {
-							selectionKey.cancel();
-							selectionKey.channel().close();
-						}
-					}
-
+				//判断这个selectionKey是否有效的
+				if (!selectionKey.isValid()) { 
+					continue;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				try {
-					selectionKey.cancel();
-					selectionKey.channel().close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
+
+				//这个key代表是一个新接入的请求
+				if (selectionKey.isAcceptable()) {
+					this.accept(selectionKey);
+				}
+
+				//读写取信息
+				if (selectionKey.isReadable()) {
+					Object result = this.read(selectionKey);
+					if (result != null) {
+						this.write(selectionKey, result);
+					} else {
+						selectionKey.cancel();
+						selectionKey.channel().close();
+					}
 				}
 			}
 		}
@@ -113,6 +112,8 @@ public class ServerHandler implements Runnable {
 	 * @throws IOException
 	 */
 	private void accept (SelectionKey selectionKey) throws IOException {
+		System.out.println("ServerSocketChannel正在循环监听");
+		
 		ServerSocketChannel ssc = (ServerSocketChannel) selectionKey.channel();
 
 		//通过ServerSocketChannel的accept()创建SocketChannel, 完成该操作意味着完成TCP的三次握手
@@ -149,19 +150,20 @@ public class ServerHandler implements Runnable {
 			if (data == null) {
 				data = b;
 			} else {
-				data = ToolUtils.concat(data, b);
+				data = SerializableUtils.concat(data, b);
 			}
 
 			buffer.clear();
 			read = channel.read(buffer);
 		}
-		
+
 		Call call = Call.getCall(data);
-		
+
 		//业务逻辑调用
-		Class<?> targetClass = serviceRegistry.get(call.getServerName());
+		Class<?> targetClass = SERVICE_REGISTRY.get(call.getServerName());
 		Method method = targetClass.getMethod(call.getMethod(), call.getParamTypes());
 		Object result = method.invoke(targetClass.newInstance(), call.getArgs());
+
 		return result;
 
 	}
@@ -175,7 +177,7 @@ public class ServerHandler implements Runnable {
 	private void write(SelectionKey selectionKey, Object data) throws IOException {
 		SocketChannel channel = (SocketChannel) selectionKey.channel();
 
-		byte[] b = ToolUtils.objectToByte(data);
+		byte[] b = SerializableUtils.objectToByte(data);
 		ByteBuffer buffer = ByteBuffer.wrap(b);
 
 		channel.write(buffer);
@@ -187,14 +189,14 @@ public class ServerHandler implements Runnable {
 	public void stop(){  
 		started = false;  
 	} 
-	
+
 	/**
 	 * 服务注册
 	 * @param serviceInterface
 	 * @param serviceIml
 	 */
 	public void regist(Class<?> serviceInterface, Class<?> serviceIml) {
-		serviceRegistry.put(serviceInterface.getName(), serviceIml);
+		SERVICE_REGISTRY.put(serviceInterface.getName(), serviceIml);
 	}
 
 }

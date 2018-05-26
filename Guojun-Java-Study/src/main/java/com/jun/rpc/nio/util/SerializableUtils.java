@@ -6,9 +6,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class ToolUtils {
+/**
+ * 
+ * @Description 对象序列化工具类
+ * @author Guojun
+ * @Date 2018年5月26日 下午3:03:12
+ *
+ */
+public class SerializableUtils {
 	
-	private ToolUtils(){};
+	private SerializableUtils(){};
 	
 	/**
 	 * 把字节码转换为对象

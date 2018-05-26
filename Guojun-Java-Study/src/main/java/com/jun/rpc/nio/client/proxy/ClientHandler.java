@@ -1,4 +1,4 @@
-package com.jun.rpc.nio.client;
+package com.jun.rpc.nio.client.proxy;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -9,8 +9,15 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
 import com.jun.rpc.nio.util.Call;
-import com.jun.rpc.nio.util.ToolUtils;
+import com.jun.rpc.nio.util.SerializableUtils;
 
+/**
+ * 
+ * @Description 客户处程序实现
+ * @author Guojun
+ * @Date 2018年5月26日 下午3:09:14
+ *
+ */
 public class ClientHandler {
 
 	/**
@@ -21,7 +28,7 @@ public class ClientHandler {
 	/**
 	 * 停止请求
 	 */
-	private boolean isStop =false;
+	private boolean isStop = false;
 
 	/**
 	 * 获得一个链接
@@ -48,10 +55,10 @@ public class ClientHandler {
 	}
 
 	/**
-	 *  设置请求参数
+	 * 设置请求参数
 	 * @param call
 	 */
-	public void setParams(Call call){
+	public void doRequest(Call call){
 		SelectionKey key = null;
 		try {
 			while (!isStop) {
@@ -107,7 +114,12 @@ public class ClientHandler {
 		channel.register(selector, SelectionKey.OP_READ);
 	}
 	
-	//获取结果
+	/**
+	 * 获取结果
+	 * @param key
+	 * @param call
+	 * @throws Exception
+	 */
 	private void read (SelectionKey key, Call call) throws Exception {
 		// 服务器可读取消息:得到事件发生的Socket通道  
 		SocketChannel channel = (SocketChannel) key.channel();  
@@ -123,13 +135,14 @@ public class ClientHandler {
 			if (data == null) {
 				data = d;
 			} else {
-				data = ToolUtils.concat(data, d);
+				data = SerializableUtils.concat(data, d);
 			}
 
 			buffer.clear();
 			r = channel.read(buffer);
 		}
-		Object result = ToolUtils.byteToObject(data);
+		
+		Object result = SerializableUtils.byteToObject(data);
 		synchronized (call) {
 			call.setResult(result);
 			call.setDone(true);
