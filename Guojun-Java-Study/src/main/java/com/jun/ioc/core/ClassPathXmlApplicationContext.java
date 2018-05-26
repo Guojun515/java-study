@@ -12,13 +12,22 @@ import com.jun.ioc.utils.BeanUtil;
 
 
 /**
- * Created by Administrator on 2017/6/16/016.
+ * 
+ * @Description 解析配置文件，通过反射生成Bean，并实现注入
+ * @author Guojun
+ * @Date 2018年5月26日 下午3:50:31
+ *
  */
 public class ClassPathXmlApplicationContext implements BeanFactory {
 
-    //定义一个IOC容器
+    /**
+     * 定义一个IOC容器
+     */
     private Map<String, Object> ioc;
 
+    /**
+     * xml解析后的内容
+     */
     private Map<String, Bean> config;
 
     /**
@@ -43,6 +52,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
             }
         }
     }
+    
     /**
      * 根据bean生成对象实例
      * @param bean
@@ -68,6 +78,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
         } catch (Exception e) {
             throw new RuntimeException("该类缺少一个无参构造方法："+className);
         }
+        
         //将bean的属性封装到对象中
         if(bean.getProperties() != null){
             for(Property p : bean.getProperties()){
@@ -82,6 +93,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
                         throw new RuntimeException("属性名称不合法或者没有相应的getter方法："+p.getName());
                     }
                 }
+                
                 //情况二：配置文件中使用的是ref属性注入
                 if(p.getRef() != null){
                     //获取属性对应的getter方法
@@ -101,6 +113,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
                 }
             }
         }
+        
         return object;
     }
 

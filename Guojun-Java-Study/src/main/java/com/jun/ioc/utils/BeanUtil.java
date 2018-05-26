@@ -2,7 +2,13 @@ package com.jun.ioc.utils;
 
 import java.lang.reflect.Method;
 
-
+/**
+ * 
+ * @Description 工具类
+ * @author Guojun
+ * @Date 2018年5月26日 下午3:50:12
+ *
+ */
 public class BeanUtil {
 
     /**

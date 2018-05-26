@@ -1,7 +1,11 @@
 package com.jun.ioc.bean;
 
 /**
- * Created by Administrator on 2017/6/16/016.
+ * 
+ * @Description Address
+ * @author Guojun
+ * @Date 2018年5月26日 下午3:55:57
+ *
  */
 public class Address {
 
@@ -10,6 +14,7 @@ public class Address {
     public String getCity() {
         return city;
     }
+    
     public void setCity(String city) {
         this.city = city;
     }

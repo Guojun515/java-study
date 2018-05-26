@@ -1,4 +1,4 @@
-package com.jun.ioc.test;
+package com.jun.ioc.main;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,19 +12,23 @@ import com.jun.ioc.core.ClassPathXmlApplicationContext;
 
 
 /**
- * Created by Administrator on 2017/6/16/016.
+ * 
+ * @Description IOC实现测试类
+ * @author Guojun
+ * @Date 2018年5月26日 下午3:38:09
+ *
  */
-public class Test {
+public class IocMain {
 	
 	public static void main(String[] args) {
 		testIOC();
-		testConfig();
+		//testConfig();
 	}
 	
 	/**
 	 * 测试IOC容器
 	 */
-	private static void testIOC(){
+	public static void testIOC(){
 
 		BeanFactory bf = new ClassPathXmlApplicationContext("/com/jun/ioc/ApplicationContext.xml");
 		User user = (User) bf.getBean("user");
@@ -39,7 +43,7 @@ public class Test {
 	/**
 	 * 测试读取配置文件
 	 */
-	private static void testConfig(){
+	public static void testConfig(){
 		Map<String,Bean> map = XmlConfig.getConfig("/com/jun/ioc/ApplicationContext.xml");
 		for (Entry<String, Bean> entry : map.entrySet()) {
 			System.out.println(entry.getKey()+"==="+entry.getValue());
