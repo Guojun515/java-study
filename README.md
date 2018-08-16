@@ -1,2 +1,2 @@
 # java-study
-Record the Java learning
+Record the Java learning!
