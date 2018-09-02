@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="595" pageHeight="2000" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0069f75c-4494-4aab-91e7-24c7d031e11d">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1029"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="95073208-589f-43b7-bdf3-2fb58fc34397"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="parameter2" class="java.lang.String"/>
+	<parameter name="parameter3" class="java.lang.String"/>
+	<parameter name="parameter4" class="java.lang.String"/>
+	<field name="field1" class="java.lang.String"/>
+	<field name="field2" class="java.lang.String"/>
+	<field name="field3" class="java.lang.String"/>
+	<field name="field4" class="java.lang.String"/>
+	<field name="field5" class="java.lang.String"/>
+	<field name="field6" class="java.lang.String"/>
+	<field name="field7" class="java.lang.String"/>
+	<field name="field8" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="500" splitType="Stretch">
+			<staticText>
+				<reportElement x="29" y="89" width="274" height="41" uuid="a0024102-1722-4151-a097-d804a1251734"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Add: Unit 02, 19/F, Hollywood Plaza, 610 Nathan Road,
+         Mongkok, Kowloon, Hong Kong]]></text>
+			</staticText>
+			<line>
+				<reportElement x="16" y="136" width="523" height="1" uuid="01415567-496a-4a97-b111-b07fb4c7d2b4"/>
+			</line>
+			<staticText>
+				<reportElement x="204" y="137" width="140" height="20" uuid="4632133d-9d4d-4206-b9a7-1e03acf94f2e"/>
+				<textElement>
+					<font fontName="Calibri" size="16"/>
+				</textElement>
+				<text><![CDATA[PROFORMA INVOICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="174" width="41" height="20" uuid="df9adef0-57bc-491b-9f44-0c17d6426853"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Sold to:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="194" width="41" height="20" uuid="fb26e540-11a2-46a4-8f32-38e07a5c9d81"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Address:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="252" width="41" height="20" uuid="f40cee97-ca1f-46d4-b1a6-6e5a85b2b000"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Attn:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="272" width="41" height="20" uuid="98cb7e5b-03f0-403c-9d98-235143908772"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tel/Email:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="335" width="53" height="20" uuid="08c38d40-f44b-4c1a-a987-6f8671ced2da"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Destination:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="395" width="65" height="20" uuid="71ba5bbe-2ebe-49b3-bdf8-fce9d341cf9b"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delivery Term:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="415" width="65" height="20" uuid="8a80854e-8159-41b9-bf59-ae8b84f59809"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment Term:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="174" width="41" height="20" uuid="e80ebc83-cb52-44fb-aff9-9423a814cbc2"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P/I No.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="194" width="41" height="20" uuid="4feaa880-caeb-4b82-befd-7a32a0c632bd"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="29" y="0" width="95" height="40" uuid="b569fa8f-1017-4c89-8267-7588baa5a72e"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Item No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="0" width="76" height="20" uuid="acae9540-87fb-4ba8-98e4-7dd0d9de4a04"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="90" height="20" uuid="7fdef579-41d0-44b5-8922-e6acd9c1f710"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="20" width="76" height="20" uuid="e795b20c-163e-487a-85fc-22fe958cbd21"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Model]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="20" width="42" height="20" uuid="8e2f7a13-6d08-473f-9bef-037b964887a7"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="20" width="48" height="20" uuid="a6d65b33-28d3-47e6-b90a-9716c82b2c15"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Memory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="0" width="63" height="40" uuid="50f32c90-336c-44c6-8d66-7f079e9b1733"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Unit Price
+(USD)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="0" width="63" height="40" uuid="5e6a2e02-ebca-4cff-839d-e089a368781e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Qty
+(PCS)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="0" width="52" height="40" uuid="6fadb6eb-6de0-4d07-959b-9f21126ddf26"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total
+Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="468" y="0" width="61" height="40" uuid="74467aa8-3d99-4d3a-b5af-3215b50deba2"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Remark]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="29" y="0" width="95" height="20" uuid="74d81cbb-c326-4476-8fbf-a478226579e5"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{field1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="0" width="76" height="20" uuid="38dfc92a-d9b2-4a46-92bb-f085021bed64"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{field2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="42" height="20" uuid="e340d38b-f620-4af7-8336-bc85fc290298"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{field3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="242" y="0" width="48" height="20" uuid="534ac36c-330e-4206-9b51-64ec23ffa6cc"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{field4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="290" y="0" width="63" height="20" uuid="ac8081f6-ceff-4d09-97ea-5992a54b8c88"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{field5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="353" y="0" width="63" height="20" uuid="8b7a8af2-a973-4215-8ac6-65886cae066d"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{field6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="416" y="0" width="52" height="20" uuid="61aa60a6-ab7d-4aeb-8e5c-f995f92b24b9"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{field7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="468" y="0" width="61" height="20" uuid="ef7ea3c9-c41e-42bf-b478-07debe04e696"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{field8}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="400" splitType="Stretch">
+			<staticText>
+				<reportElement x="29" y="0" width="324" height="20" uuid="5e3ab004-93e2-4ce6-a30f-eb4ac4292b5e"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="468" y="0" width="61" height="20" uuid="96483091-1c3c-4bc5-a4da-0379bbde4d6a"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="353" y="0" width="63" height="20" uuid="1da13071-5d0a-496a-8cf4-44207856f2a4"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{parameter1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="416" y="0" width="52" height="20" uuid="291d0835-38fa-4965-96a0-a10eba6fd122"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{parameter2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="20" width="171" height="20" uuid="d85499ad-392a-433a-ad3b-3e93ee166a9b"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount in Word:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="20" width="329" height="20" uuid="42b542c6-8ba1-45d3-bdd4-adb31804804a"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{parameter3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="40" width="171" height="110" uuid="c221496c-b392-4555-8df2-5f27457c5b71"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount in Word:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="40" width="329" height="110" uuid="04f90836-72e7-44be-a7e8-f150d896137b"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{parameter4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="160" width="65" height="20" uuid="a642f9cc-7a54-471a-b7ce-e15a0d133096"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Remarks:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="199" width="486" height="21" uuid="0e28f715-735d-49e0-8e62-da639883e64c"/>
+				<text><![CDATA[ 1)All bank charges of remitting Bank and Intermediary Bank shall be borne by buyer. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="233" width="486" height="33" uuid="ed689c88-8d5a-4b70-a3aa-d5252c95feac"/>
+				<text><![CDATA[ 2)Production will not be scheduled until TT deposit is received. The supplier will not bear any responsibility
+    for any shipment delay due to late payment.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="282" width="486" height="57" uuid="f9c0d0ee-be59-454a-b351-4f3fffd2a774"/>
+				<text><![CDATA[ 3)All orders become binding once confirmed and accepted by the supplier. Orders may not be cancelled or
+    changed by the buyer without written content of the supplier. A cancellation or restocking charge, of up to the
+    total value of the order is applicable to orders cancelled or changed.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="372" width="223" height="20" uuid="eae2a9f2-683a-4f10-af54-9320f254afb4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Issued by:   TELECOM COMPANY LIMITED]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="372" width="217" height="20" uuid="a0a478c3-f7eb-40b3-a33b-439b6cf821ee"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Accepted by:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="95" y="385" width="147" height="1" uuid="8ea79ca4-a331-45d8-b42e-2e2faaa0f101"/>
+			</line>
+			<line>
+				<reportElement x="331" y="386" width="137" height="1" uuid="75eb1a54-b76e-4863-8e9c-1ef344a052bb"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
