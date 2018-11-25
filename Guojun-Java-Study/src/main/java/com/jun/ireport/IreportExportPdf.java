@@ -73,7 +73,7 @@ public class IreportExportPdf {
             exporter.setConfiguration(pdfExporterConfiguration);
             exporter.exportReport();
             
-            File file=new File("C:/Users/v-yuguojun/Desktop/temp/report.pdf");
+            File file=new File("C:/Users/dell/Desktop/excel/report.pdf");
             outputStream=new FileOutputStream(file);
             outputStream.write(outPut.toByteArray());
         } catch (JRException e) {

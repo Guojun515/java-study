@@ -24,11 +24,10 @@ public class XmlConfig {
      * @param path 配置文件路径
      * @return
      */
-	@SuppressWarnings("unchecked")
 	public static Map<String, Bean> getConfig(String path){
         Map<String, Bean> configMap = new HashMap<String, Bean>(100);
        
-        //使用dom4j和xpath读取xml文件
+        //使用dom4j读取xml文件
         Document doc = null;
         SAXReader reader = new SAXReader();
         
@@ -41,11 +40,10 @@ public class XmlConfig {
             throw new RuntimeException("请检查您的xml配置文件路径是否正确！");
         }
         
-        //定义xpath，取出所有的bean
-        String xpath = "//bean";
+        Element root = doc.getRootElement();//获得根节点；  
         
         //对bean进行遍历
-        List<Element> list = doc.selectNodes(xpath);
+        List<Element> list = root.elements("bean");
         if(list!=null){
             for (Element beanEle : list) {
             	//封装到bean对象中
